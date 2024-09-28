@@ -5,7 +5,7 @@ class ProblemaGrafo:
     def __init__(self, estado_inicial, objetivo):
         self.estado_inicial = estado_inicial
         self.objetivo_estado = objetivo
-        self.grafo = grafo2
+        self.grafo = grafo_romenia
 
 
     def objetivo(self, estado):

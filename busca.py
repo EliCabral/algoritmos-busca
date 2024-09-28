@@ -7,10 +7,12 @@ from collections import deque
 def busca_largura(problema):
     fila = deque() 
     fila.append({'estado': problema.estado_inicial, 'pai': None, 'custo': 0}) 
-
+    count = 0
     visitados = set() 
 
     while fila:
+        count+=1
+        print(f"{count}º Borda:", [no['estado'] for no in fila])
         no = fila.popleft() 
 
         if no['estado'] in visitados:
@@ -19,13 +21,14 @@ def busca_largura(problema):
         visitados.add(no['estado'])
 
         if problema.objetivo(no['estado']):
+            print(f"\nQuantidade de nós na borda final: {len(fila)}")
             return reconstruir_caminho(no), no['custo']  #objetivo alcançado, retorna caminho e custo
 
         sucessores = expandir(no, problema)
         for s in sucessores:
             if s['estado'] not in visitados:  
                 fila.append(s)  # adicionando os sucessores nao visitados
-                print(f"fila de sucessores: {fila}")
+                #print(f"fila de sucessores: {fila}")
 
     return [], 'sem resultados'   
 

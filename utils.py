@@ -1,6 +1,3 @@
-from grafo2 import grafo2
-
-
 def reconstruir_caminho(no):
     caminho = []
     while no:
@@ -8,35 +5,34 @@ def reconstruir_caminho(no):
         no = no['pai']
     return list(reversed(caminho))
 
-
-def expandir(no, problema):
+def expandir(no, problema, visitados):
     sucessores = []
     estado_atual = no['estado']
     
     for vizinho, custo in problema.grafo.get(estado_atual, []): 
-        sucessores.append({
-            'estado': vizinho,
-            'custo': custo + no['custo'],  
-            'pai': no  
-        })
+        if vizinho not in visitados: 
+            sucessores.append({
+                'estado': vizinho,
+                'custo': custo + no['custo'],  
+                'pai': no 
+            })
 
     return sucessores
 
 
 
+def compara_custo(item):
+    return item[0]  
 
 
+def insere_fila_menor_custo(fila, item):
+    fila.append(item) 
+    fila.sort(key=compara_custo)  
 
-# def expandir(no, problema, visitados):
-#     sucessores = []
-#     estado_atual = no['estado']
-    
-#     for vizinho, custo in problema.grafo.get(estado_atual, []): 
-#         if vizinho not in visitados: 
-#             sucessores.append({
-#                 'estado': vizinho,
-#                 'custo': custo + no['custo'],  
-#                 'pai': no 
-#             })
 
-#     return sucessores
+def remove_no_menor_custo(fila):
+    if len(fila) > 0:
+        return fila.pop(0)  
+    return None  
+
+

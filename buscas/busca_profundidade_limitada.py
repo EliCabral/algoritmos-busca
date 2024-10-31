@@ -16,12 +16,19 @@ def BPL(problema, no, limite, visitados, borda_final):
         
         print(f"Borda: {[sucessor['estado'] for sucessor in reversed(sucessores)]}")
         
+        resultado_final = 'CORTE'  
+        melhor_custo = None
+
         for sucessor in sucessores:
-            resultado = BPL(problema, sucessor, limite - 1, visitados, borda_final)
-            if resultado != 'CORTE': 
-                return resultado
-    
-    return 'CORTE', None
+            resultado, custo = BPL(problema, sucessor, limite - 1, visitados, borda_final)
+            if resultado != 'CORTE':
+                return resultado, custo  
+            else:
+                resultado_final = 'CORTE'  
+
+        return resultado_final, melhor_custo 
+    else:
+        return 'CORTE', None 
 
 
 def busca_profundidade_limitada(problema, limite):
